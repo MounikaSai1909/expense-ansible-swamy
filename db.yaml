@@ -1,0 +1,30 @@
+- name: configure db server
+  hosts: db
+  become: true
+  vars:
+     login_host: 172.31.90.209 
+  tasks:
+   - name: install MySql server
+     ansible.builtin.dnf:
+      name: mysql-server 
+      state: latest
+  
+   - name: start and enable MySql service
+     ansible.builtin.service:
+      name: mysqld
+      state: started
+      enabled: yes
+  
+  #check root password is already setup or not
+   - name: check DB connection
+     community.mysql.mysql_info:
+      login_user: root
+      login_password: ExpenseApp@1
+      login_host: "{{ login_host }}"
+      filter: version
+    ignore_errors: true
+      
+
+    
+    
+
