@@ -3,7 +3,10 @@
   become: yes
   vars:
     login_host: 172.31.90.209
-    login_password: ExpenseApp@1
+  vars_prompt:
+    - name: mysql_root_password
+      prompt: please enter MySql root password
+      private: no
 
   tasks:
   - name: disbale default node js
@@ -61,7 +64,7 @@
     community.mysql.mysql_db:
      login_host: "{{ login_host }}"
      login_user: root
-     login_password: "{{ login_password }}"
+     login_password: "{{ mysql_root_password }}"
      target: /app/schema/backend.sql
      name: import
   
