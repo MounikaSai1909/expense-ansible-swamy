@@ -14,9 +14,9 @@
   
   - name: install node js
     ansible.builtin.dnf:
-     name: {{ item }}
-     state: installed
-     loop:
+      name: {{ item }}
+      state: installed
+    loop:
       - nodejs
       - mysql
 
