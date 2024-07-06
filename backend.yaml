@@ -60,14 +60,22 @@
      - cryptography
      executable: pip3.9
 
+ # - name: import data into mysql
+  #  community.mysql.mysql_db:
+  #   login_host: "{{ login_host }}"
+  #  login_user: root
+  #  login_password: "{{ mysql_root_password }}"
+  #  state: import
+  #  target: /app/schema/backend.sql
+  #  name: import_db_name
+
   - name: import data into mysql
     community.mysql.mysql_db:
-     login_host: "{{ login_host }}"
      login_user: root
-     login_password: "{{ mysql_root_password }}"
      state: import
      target: /app/schema/backend.sql
      name: import_db_name
+
 
 
   - name: daemon reload 
