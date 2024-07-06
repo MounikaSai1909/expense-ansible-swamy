@@ -1,6 +1,6 @@
 - name: configure backend server
   hosts: backend
-  become: true
+  become: yes
   vars:
     login_host: 172.31.90.209
     login_password: ExpenseApp@1

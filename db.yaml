@@ -1,6 +1,6 @@
 - name: configure db server
   hosts: db
-  become: true
+  become: yes
   vars:
      login_host: 172.31.90.209 
   vars_prompt:
