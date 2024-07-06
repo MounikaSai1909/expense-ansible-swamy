@@ -2,6 +2,8 @@
   hosts: backend
   become: true
   vars:
+    login_host: 172.31.90.209 
+    login_password: ExpenseApp@1
 
   tasks:
   - name: disbale default node js
@@ -12,8 +14,11 @@
   
   - name: install node js
     ansible.builtin.dnf:
-     name: nodejs
+     name: {{ item }}
      state: installed
+     loop:
+     - nodejs
+     - mysql
 
   - name: create expense user
     ansible.builtin.user:
@@ -39,5 +44,40 @@
     ansible.builtin.command: npm install
     args:
        chdir: /app
+  
+  - name: copy backend service
+    ansible.builtin.copy: 
+     src: backend.service
+     dest: /etc/systemd/system/backend.service
+  
+  - name: install python mysql dependencies
+    ansible.builtin.pip:
+    name:
+    - PyMySQL
+    - cryptography
+    executable: pip 3.9
+
+  - name: import data into mysql
+    community.mysql.mysql_db:
+     login_host: {{ login_host }}
+     login_user: root
+     login_password: {{ login_password }}
+     target: /app/schema/backend.sql
+     name: import
+  
+  - name: daemon reload and restart
+    ansible.builtin.systemd_service:
+      daemon_reload: true
+
+  - name: start and enable backend
+    ansible.builtin.service:
+     name: backend
+     state: started
+     enable: yes
+
+    
+
+
+
 
 
