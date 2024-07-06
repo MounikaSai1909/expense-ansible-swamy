@@ -66,8 +66,9 @@
      login_user: root
      login_password: "{{ mysql_root_password }}"
      target: /app/schema/backend.sql
-     name: import
-  
+     name: import_db_name
+     login_cfg: /root/.my.cnf
+
   - name: daemon reload 
     ansible.builtin.systemd_service:
       daemon_reload: true
