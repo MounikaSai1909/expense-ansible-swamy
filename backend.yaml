@@ -2,11 +2,8 @@
   hosts: backend
   become: yes
   vars:
-    login_host: backend
-  vars_prompt:
-    - name: mysql_root_password
-      prompt: please enter MySql root password
-      private: no
+    login_host: 172.31.20.30
+    login_password: ExpenseApp@1
 
   tasks:
   - name: disbale default node js
@@ -60,25 +57,15 @@
      - cryptography
      executable: pip3.9
 
- # - name: import data into mysql
-  #  community.mysql.mysql_db:
-  #   login_host: "{{ login_host }}"
-  #  login_user: root
-  #  login_password: "{{ mysql_root_password }}"
-  #  state: import
-  #  target: /app/schema/backend.sql
-  #  name: import_db_name
-
-  - name: import data into mysql
-    community.mysql.mysql_db:
-     login_user: root
-     login_password: "{{ mysql_root_password }}"
-     state: import
-     target: /app/schema/backend.sql
-     name: import_db_name
-
-
-
+   - name: import data into mysql
+     community.mysql.mysql_db:
+      login_user: root
+      login_password: "{{ login_password }}"
+      login_host: "{{ login_host }}"
+      target: /app/schema/backend.sql
+      state: import
+      name: all
+  
   - name: daemon reload 
     ansible.builtin.systemd_service:
       daemon_reload: true
