@@ -2,7 +2,7 @@
   hosts: backend
   become: yes
   vars:
-    login_host: 172.31.20.30
+    login_host: 172.31.20.222
     login_password: ExpenseApp@1
 
   tasks:
