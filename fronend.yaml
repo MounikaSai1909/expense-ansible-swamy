@@ -13,7 +13,7 @@
        enabled: yes
     
     - name: delete default website
-      anisble.builtin.file:
+      ansible.builtin.file:
         path: /usr/share/nginx/html
         state: absent
     
