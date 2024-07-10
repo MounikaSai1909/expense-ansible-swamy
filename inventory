@@ -4,5 +4,6 @@
 [backend]
 172.31.21.139
 
-#[frontend]
+[frontend]
+3.80.67.9
 
